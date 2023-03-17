@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+  <style>
+
+    body {
+      width: 100%;
+      height: 100%;
+    }
+    .container {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex-flow: column;
+        width: 100%;
+      height: 100vh;
+      background-color: #F49E88;
+    }
+
+    .wrapper {
+      display: flex;
+    }
+
+    h1 {
+      color: #701131;
+    }
+
+    button {
+      background-color: #701131;
+      color: #F49E88;
+      margin-left: 1rem;
+      border: none;
+      padding: 1rem;
+      border-radius: 5px;
+    }
+
+    input {
+      color: #fff;
+      padding: 1rem;
+      border: none;
+      background-color: #B5223F;
+      border-radius: 5px;
+    }
+
+    input:focus {
+      outline: none;
+      border: #701131 solid 2px;
+
+    }
+
+    a {
+      color: #701131;
+      padding: 1rem;
+      font: 1.5rem;
+    }
+
+    #qrcode {
+      padding: 2rem;
+    }
+  </style>
+</head>
+
+
+<body>
+  <div class="container">
+    <h1>Fyll i en länk som du vill skapa en QR kod ifrån</h1>
+    <div class="wrapper">
+      <input id="qrcodeInput" />
+      <button onclick="createQrCode()"">Skapa QR kod</button>
+</div>
+<div id="qrcode">
+    </div>
+    <a id='qrdl' hidden>Ladda ner QR kod</a>
+  </div>
+
+
+  <script>
+
+    const createQrCode = () => {
+
+      const qrcode = new QRCode(document.getElementById('qrcode'), {
+        text: document.getElementById('qrcodeInput').value,
+        width: 256,
+        height: 256,
+        colorDark: '#701131',
+        colorLight: '#F49E88',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+
+      setTimeout(() => {
+        let qelem = document.querySelector('#qrcode img')
+        let dlink = document.querySelector('#qrdl')
+        let qr = qelem.getAttribute('src');
+        dlink.setAttribute('href', qr);
+        dlink.setAttribute('download', 'QrConsid');
+        dlink.removeAttribute('hidden');
+      }, 500);
+
+    }
+  </script>
+</body>
+
+</html>
