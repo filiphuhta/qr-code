@@ -7,19 +7,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
   <style>
-
-    body {
-      width: 100%;
-      height: 100%;
+    body,
+    div {
+      margin: 0;
+      border: 0 none;
+      padding: 0;
     }
+
+    html,
+    body {
+      height: 100%;
+      min-height: 100%;
+    }
+
+
     .container {
       justify-content: center;
       align-items: center;
       display: flex;
       flex-flow: column;
-        width: 100%;
+      width: 100%;
       height: 100vh;
       background-color: #F49E88;
+      position: absolute;
+      top: 0;
+      bottom: 0;
     }
 
     .wrapper {
@@ -28,7 +40,22 @@
 
     h1 {
       color: #701131;
+      margin-left: 1rem;
+      margin-right: 1rem;
     }
+
+    .footer {
+      bottom: 3rem;
+      position: absolute;
+    }
+
+    h2 {
+      color: #701131;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
 
     button {
       background-color: #701131;
@@ -72,18 +99,25 @@
     <div class="wrapper">
       <input id="qrcodeInput" />
       <button onclick="createQrCode()"">Skapa QR kod</button>
-</div>
-<div id="qrcode">
+      </div>
+
+    <div id="qrcode">
     </div>
-    <a id='qrdl' hidden>Ladda ner QR kod</a>
+    <a id="qrdl" hidden>Ladda ner QR kod</a>
+    <div class="footer">
+      <h2>Kontakt</h2>
+      <a href="mailto:filip.huhta@consid.se">filip.huhta@consid.se</a>
+    </div>
   </div>
 
 
   <script>
 
     const createQrCode = () => {
+      const qrcodeDiv = document.getElementById('qrcode');
+      qrcodeDiv.innerHTML = ''; // clear existing content
 
-      const qrcode = new QRCode(document.getElementById('qrcode'), {
+      const qrcode = new QRCode(qrcodeDiv, {
         text: document.getElementById('qrcodeInput').value,
         width: 256,
         height: 256,
@@ -91,7 +125,6 @@
         colorLight: '#F49E88',
         correctLevel: QRCode.CorrectLevel.H
       });
-
 
       setTimeout(() => {
         let qelem = document.querySelector('#qrcode img')
